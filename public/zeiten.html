@@ -10,19 +10,18 @@
 <header>
     <img src="ebbild_192.png" alt="ebb" style="width:60px;height:65px;">
 	<h1>Administrator Dashboard</h1> 
+    <button onclick="clearLog()">Log löschen</button>
+    <div id="console"></div>
+
 </header>
 
 <nav>
 	<h2>Navigation</h2>
 	<ul>
-		<li><a href="#">Startseite</a>
-		</li>
-		<li><a href="#">Unterseite 1</a>
-		</li>
-		<li><a href="#">Unterseite 2</a>
-		</li>
-		<li><a href="#">Kontakt</a>
-		</li>
+		<li><a href="index.html">Home</a></li>
+		<li><a href="login_intern.html">Interner Bereich</a></li>
+        <li><a aria-current="page">Zeiten</a></li>
+			
 	</ul>
 </nav>
 
@@ -67,8 +66,16 @@
     ladeZeiten();
     ladeVereine();
 });
-
-
+function log(message) {
+  const consoleArea = document.getElementById("console");
+  const line = document.createElement("div");
+  line.textContent = message;
+  consoleArea.appendChild(line);
+}
+function clearLog() {
+  const consoleArea = document.getElementById("console");
+  consoleArea.textContent = "";
+}
  async function ladeVereine() {
     const res = await fetch('/api/vereine');
     const vereine = await res.json();
@@ -85,6 +92,7 @@
         option.textContent = ver;
 
         select.appendChild(option);
+        log (`Verein geladen: ${ver}`); 
     });
 }
 async function ladeZeiten() {
