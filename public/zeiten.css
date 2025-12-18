@@ -1,91 +1,81 @@
- body {
-	display: grid;
-	gap: 0.5em;
-}
-/* 3-spaltiges Layout für breitere Viewports */
+body {
+  margin: 0;
+  min-height: 100vh;
 
-@media (min-width: 45em) {
-	body {
-		grid-template-columns: 0.5fr 1fr 3fr;
-		grid-template-rows: auto 1fr min-content;
-	}
-}
-
-header,
-nav,
-main,
-article,
-section,
-aside,
-footer {
-	border-radius: 0 0.5em 0.5em;
-	border: thin solid;
-	padding: 1em;
+  display: grid;
+  grid-template-columns: 0.1fr 0.1fr 4fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header header"
+    "nav    main   aside";
 }
 
-header,
-footer {
-	grid-column: 1 / -1;
-}
-
+/* Grid-Zuordnung */
 header {
-	background: #F1F3F4;
-	border-color: #d5d5d5;
-	grid-column: 1 / -1;
-	grid-row: 1;
-	display: grid;
-	grid-template-columns: 4em 1fr;
-	gap: .5em;
-	img {
-		width: 2.25em;
-		aspect-ratio: 1/1;
-		padding-top: 1.5em;
-	}
+  grid-area: header;
+  	border: thin solid;
+  border-color: #d5d5d5;
+  background: #bfecb900;
+  color: rgb(106, 131, 243);
+  padding: 1rem;
 }
 
 nav {
-	background: #fffbf0;
-	border-color: #e7c157;
+  grid-area: nav;
+  background: #cccccc00;
+  	border: thin solid;
+  border-color: #d5d5d5;
 }
 
 main {
-	background: #ffede0;
-	border-color: #df6c20;
+  grid-area: main;
+  background: #eeeeee00;
+		border: thin solid;	
+  border-color: #d5d5d5;
 }
 
 aside {
-	background: #ebf5d7;
-	border-color: #8db243;
+ display: grid;	
+  /*grid-area: aside;*/
+	/*border: thin solid;*/
+	/*border-color: #e74f4f;*/
+
+  grid-template-columns: 1.0fr 0.5fr 0.5fr 1fr 0.5fr 0.5fr;
+		grid-template-rows: auto 1fr min-content;
+  gap: 0.5rem;
 }
 
-footer {
-	background: #e4ebf2;
-	border-color: #8a9da8;
+#spalte1	 {
+
+  background: #f4f4f400;
+  border: thin solid;
+  border-color: #e96868;
+  padding: 0.5rem;
+}
+#spalte2	 {
+
+  background: #f4f4f400;
+  border: thin solid;
+  border-color: #e96868;
+  padding: 0.5rem;
 }
 
-footer * {
-	float: right;
-	clear: right;
-	margin: 0 0 1em;
-}
 
-body {
-	margin: 0 auto;
-	max-width: 110em;
-	font-family: sans-serif;
-}
 
-  
+
+
+
+
+
+/* 1️⃣ Seitenlayout */
+@media (max-width: 900px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "aside";
+  }
+}
  
- h2 { margin-top: 20px;
-        padding-bottom: 5px;
-        color: #007bff;    
-        } 
-nav {
-	background: #fffbf0;
-	border-color: #e7c157;
-}
-   button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-hr {
- border-color: #e7c157;
-}

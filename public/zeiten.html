@@ -25,9 +25,6 @@
 	</ul>
 </nav>
 
-
-
-
 <main>
 <h2>Neue Zeit eingeben</h2>
 
@@ -53,13 +50,31 @@
 <select id="VereineSelect"></select>
 <button id="deleteVerein">Ausgewählten Verein löschen</button>
 </main>
-<aside id="news">
-	<h2>Spiele eingeben</h2>
-	<p>in Arbeit</p>
-</aside>
+
+<aside>
+    <div id="spalte1">
+        <p>Anstoss</p>
+        <p>1</p>
+        <p>1</p>
+        <p>1</p>
+        <p>1</p>
+        <p>1</p>
+    </div>
+    <div id="spalte2">
+        <p>Home Verein</p>
+    </div>
+    <div><p>3</p></div>
+    <div><p>4</p></div>
+    <div><p>5</p></div>
+    <div><p>6</p></div>
+  </aside>
+
 <footer>
 	<h2>Fußzeile</h2>
 </footer>
+
+
+
 
 <script>
  document.addEventListener('DOMContentLoaded', () => {
@@ -92,7 +107,7 @@ function clearLog() {
         option.textContent = ver;
 
         select.appendChild(option);
-        log (`Verein geladen: ${ver}`); 
+        //log (`Verein geladen: ${ver}`); 
     });
 }
 async function ladeZeiten() {

@@ -18,8 +18,8 @@
             "previewLimit": 50,
             "server": "localhost",
             "driver": "PostgreSQL",
-            "name": "railway app4",
-            "connectString": "postgresql://postgres:PjwaPagMJHhxBTYjOcCdhUCvfEHvYLTr@shortline.proxy.rlwy.net:50242/railway"
+            "name": "railway app5",
+            "connectString": "postgresql://postgres:YrhPuipKStNnZRghwqjcNWJzgrfdAnZO@ballast.proxy.rlwy.net:52562/railway"
         }
     ]
 }

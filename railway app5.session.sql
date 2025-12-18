@@ -8,5 +8,5 @@ CREATE TABLE vereine (
     vereinsname TEXT NOT NULL
 );
 
-*/
 select * from vereine
+*/
