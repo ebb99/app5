@@ -1,0 +1,25 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "fussball lokal",
+            "connectString": "postgres://postgres:6778@localhost:5432/postgres"
+        },
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": false
+                }
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "railway app4",
+            "connectString": "postgresql://postgres:PjwaPagMJHhxBTYjOcCdhUCvfEHvYLTr@shortline.proxy.rlwy.net:50242/railway"
+        }
+    ]
+}
