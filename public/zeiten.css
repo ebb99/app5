@@ -44,20 +44,21 @@ aside {
 		grid-template-rows: auto 1fr min-content;
   gap: 0.5rem;
 }
-
-#spalte1	 {
-
+.spalte {
   background: #f4f4f400;
   border: thin solid;
   border-color: #e96868;
   padding: 0.5rem;
 }
+#spalte1	 {
+
+  background: #f4f4f400;
+
+}
 #spalte2	 {
 
   background: #f4f4f400;
-  border: thin solid;
-  border-color: #e96868;
-  padding: 0.5rem;
+ 
 }
 
 
