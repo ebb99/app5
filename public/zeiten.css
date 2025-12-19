@@ -35,7 +35,8 @@ aside {
   grid-area: aside;
 
   display: grid;
-  grid-template-columns:0.5fr 0.7fr 0.5fr 0.5fr 0.7fr 0.5fr  ;
+  grid-template-columns:0.5fr 0.7fr 0.5fr 0.5fr 0.7fr 0.5fr  0.5fr;
+ 
   gap: 0.5rem;
 }
 button {
@@ -50,14 +51,13 @@ button {
 select {
   background: white;
   border-style: thin solid;
-  border-color: black;
-  padding: 0.5rem;
+   padding: 0.5rem;
   margin-bottom: 1rem;
   cursor: pointer;
 }   
 .spalte {
   background: white;
-  border-style: thin solid;
+  border-style: solid;
   border-color: red;
   text-align: center;
   padding: 0.5rem;
