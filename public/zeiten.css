@@ -35,7 +35,7 @@ aside {
   grid-area: aside;
 
   display: grid;
-  grid-template-columns:0.5fr 0.7fr 0.5fr 0.5fr 0.7fr 0.5fr  0.5fr;
+  grid-template-columns:0.4fr 1.0fr;
  
   gap: 0.5rem;
 }
@@ -55,7 +55,13 @@ select {
   margin-bottom: 1rem;
   cursor: pointer;
 }   
-.spalte {
+#spalte1 {
+  background: white;
+  border-style: solid;
+  border-color: red;
+  text-align: center;
+  padding: 0.5rem;
+}#spalte2 {
   background: white;
   border-style: solid;
   border-color: red;

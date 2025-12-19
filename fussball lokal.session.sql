@@ -11,14 +11,17 @@ CREATE TABLE spiele (
    anstoss TIMESTAMP WITHOUT TIME ZONE,
    homeverein TEXT NOT NULL,
    gastverein TEXT NOT NULL,
-   hometore INTEGER NOT NULL,
-   gasttore INTEGER NOT NULL,
    statuswort TEXT NOT NULL
 );
 
 DROP TABLE termine;
 
-
 	SELECT tablename FROM pg_catalog.pg_tables
 	WHERE schemaname = 'public';
+
+DROP TABLE spiele;
 */
+
+
+
+select * from spiele;

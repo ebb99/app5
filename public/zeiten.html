@@ -53,35 +53,27 @@
 
 <aside>
 
-    <div id="spalte0" class="spalte">
-        <h5>Control</h5>
+    <div id="spalte1" >
+        <h2>Auswahl</h2>
+
+         <h3>Zeiten</h3> 
+        <select id="AuswahlzeitSelect"></select> 
+         <h3>Heimverein</h3>  
+        <select id="HeimvereinSelect"></select> 
+
+         <h3>Gastverein</h3>  
+        <select id="GastvereinSelect"></select>
+
+        <h3>Spiel speichern:</h3>
+        <button id="saveSpiel">Spiel Speichern</button>
     </div>
  
-    <div id="spalte1" class = "spalte">
-        <p>Anstoss</p>
-        <p>1</p>
-        <p>1</p>
-        <p>1</p>
-        <p>1</p>
-        <p>1</p>
-    </div>
+    
 
-    <div id="spalte2" class="spalte">
-        <h5>Home Verein</h5>
+    <div id="spalte2" >
+        <h5>Spiele</h5>
     </div>
-    <div class="spalte">
-        <h4>Gast Verein</h4>
-    </div>
-    <div class="spalte">
-        <h3>Tore Home</h3>
-    </div>
-    <div class="spalte">
-        <p>Tore Gast</p>
-    </div>
-    <div class="spalte">
-        <p>Status</p>
-    </div>
-
+  
     
   </aside>
 
@@ -112,17 +104,29 @@ function clearLog() {
     const vereine = await res.json();
    
     const select = document.getElementById('VereineSelect');
+    const heimSelect = document.getElementById('HeimvereinSelect');
+    const gastSelect = document.getElementById('GastvereinSelect');
     select.innerHTML = '';
+    heimSelect.innerHTML = '';
+    gastSelect.innerHTML = '';
 
     vereine.forEach(z => {
         const option = document.createElement('option');
+        const option2 = document.createElement('option');
+        const option3 = document.createElement('option');
         option.value = z.id;
+        option2.value = z.id;
+        option3.value = z.id;
 
         // Anzeige lokal formatiert
         const ver = z.vereinsname;
         option.textContent = ver;
+        option2.textContent = ver;
+        option3.textContent = ver;
 
         select.appendChild(option);
+        heimSelect.appendChild(option2);
+        gastSelect.appendChild(option3);
         //log (`Verein geladen: ${ver}`); 
     });
 }
@@ -131,22 +135,23 @@ async function ladeZeiten() {
     const zeiten = await res.json();
 
     const select = document.getElementById('zeitenSelect');
+    const select2 = document.getElementById('AuswahlzeitSelect');
     select.innerHTML = '';
+    select2.innerHTML = '';
 
     zeiten.forEach(z => {
         const option = document.createElement('option');
+        const option2 = document.createElement('option');
         option.value = z.id;
-
+        option2.value = z.id;
         // Anzeige lokal formatiert
         const date = new Date(z.zeit);
         option.textContent = date.toLocaleString('de-DE');
-
-        select.appendChild(option);
+        option2.textContent = date.toLocaleString('de-DE');
+       select.appendChild(option);
+        select2.appendChild(option2);
     });
 }
-
-
-
 
 // Neuen Verein speichern
 document.getElementById('saveVerein').addEventListener('click', async () => {
@@ -157,18 +162,13 @@ document.getElementById('saveVerein').addEventListener('click', async () => {
         alert('Bitte Verein eingeben');
         return;
     }
-
-    // ⬇️ WICHTIG: in ISO-Format mit Zeitzone
-    //const isoTimestamp = new Date(value).toISOString();
-
-    
+   
     const res = await fetch('/api/vereine', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ vereinsname: verein })
     }); 
-    
-
+   
     if (res.ok) {
           alert("Daten gespeichert!");
           document.getElementById('VereinInput').value = '';
@@ -176,16 +176,7 @@ document.getElementById('saveVerein').addEventListener('click', async () => {
         } else {
           alert("Fehler beim Speichern.");
         }
-
-
-
 });
-/*
-    document.getElementById('zeitInput').value = '';
-    ladeZeiten();
-
-*/
-
 
 // Neue Zeit speichern
 document.getElementById('saveBtn').addEventListener('click', async () => {
@@ -196,17 +187,14 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         return;
     }
 
-    // ⬇️ WICHTIG: in ISO-Format mit Zeitzone
     const isoTimestamp = new Date(value).toISOString();
-
-    
+ 
     const res = await fetch('/api/zeiten', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ zeit: isoTimestamp })
     }); 
     
-
     if (res.ok) {
           alert("Daten gespeichert!");
           document.getElementById('zeitInput').value = '';
@@ -214,10 +202,6 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         } else {
           alert("Fehler beim Speichern.");
         }
-
-
-
-
 
     document.getElementById('zeitInput').value = '';
     ladeZeiten();
