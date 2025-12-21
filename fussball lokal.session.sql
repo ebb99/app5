@@ -9,7 +9,7 @@ CREATE TABLE vereine (
 CREATE TABLE spiele (
    id SERIAL PRIMARY KEY,
    anstoss TIMESTAMP WITHOUT TIME ZONE,
-   homeverein TEXT NOT NULL,
+   heimverein TEXT NOT NULL,
    gastverein TEXT NOT NULL,
    statuswort TEXT NOT NULL
 );
@@ -21,7 +21,10 @@ DROP TABLE termine;
 
 DROP TABLE spiele;
 */
-
-
-
-select * from spiele;
+CREATE TABLE spiele (
+   id SERIAL PRIMARY KEY,
+   anstoss TIMESTAMP WITHOUT TIME ZONE,
+   heimverein TEXT NOT NULL,
+   gastverein TEXT NOT NULL,
+   statuswort TEXT NOT NULL
+);

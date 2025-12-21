@@ -71,7 +71,9 @@
     
 
     <div id="spalte2" >
-        <h5>Spiele</h5>
+        <h3>Gespeicherte Spiele</h3>
+        <select id="SpieleSelect"></select>
+    <button id="deleteSpiel">Ausgewähltes Spiel löschen</button>
     </div>
   
     
@@ -88,6 +90,7 @@
  document.addEventListener('DOMContentLoaded', () => {
     ladeZeiten();
     ladeVereine();
+    ladespiele()
 });
 function log(message) {
   const consoleArea = document.getElementById("console");
@@ -144,6 +147,7 @@ async function ladeZeiten() {
         const option2 = document.createElement('option');
         option.value = z.id;
         option2.value = z.id;
+        //log(`Zeit geladen: ${z.zeit}`);
         // Anzeige lokal formatiert
         const date = new Date(z.zeit);
         option.textContent = date.toLocaleString('de-DE');
@@ -152,6 +156,66 @@ async function ladeZeiten() {
         select2.appendChild(option2);
     });
 }
+//Spiele lade
+// in Arbeit
+ async function ladespiele() {
+    const res = await fetch('/api/spiele');
+    const spiele = await res.json();
+
+    const select = document.getElementById('SpieleSelect');
+    select.innerHTML = '';
+
+    spiele.forEach(s => {
+        const option = document.createElement('option');
+        option.value = s.id;
+        // Anzeige lokal formatiert
+        const date = new Date(s.anstoss);
+        const h_tore = s.heimtore;
+        const g_tore = s.gasttore;       
+        option.textContent = `${date.toLocaleString('de-DE')} - ${s.heimverein} gegen ${s.gastverein} ${s.heimtore} : ${s.gasttore} (${s.statuswort})`;
+       select.appendChild(option);
+    });
+}
+
+// neues Spiel speichern
+document.getElementById('saveSpiel').addEventListener('click', async () => {
+
+const select = document.getElementById("AuswahlzeitSelect");
+const anstosstext = select.options[select.selectedIndex].text;
+anstoss = convertToPostgresTimestamp(anstosstext);
+
+const select2 = document.getElementById('HeimvereinSelect');
+const heimverein = select2.options[select2.selectedIndex].text;
+
+const select3 = document.getElementById('GastvereinSelect');
+const gastverein = select3.options[select3.selectedIndex].text;
+
+let heimtore = 0;
+let gasttore = 0;
+const statuswort = 'geplant';
+
+log(`Neues Spiel: ${anstoss} - ${heimverein} vs ${gastverein} ${heimtore} : ${gasttore} (${statuswort})`);
+
+    if (!anstoss || !heimverein || !gastverein) {
+        alert('Bitte Zeit, Heimverein und Gastverein auswählen');
+        return;
+    }
+
+    const res = await fetch('/api/spiele', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ anstoss, heimverein, gastverein, heimtore, gasttore, statuswort  })
+    }); 
+    
+    if (res.ok) {
+          alert("Spiel gespeichert!");
+    
+        } else {
+          alert("Fehler beim Speichern des Spiels.");
+        }
+    ladespiele();
+});
+
 
 // Neuen Verein speichern
 document.getElementById('saveVerein').addEventListener('click', async () => {
@@ -207,6 +271,17 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
     ladeZeiten();
 });
 
+// Spiel löschen
+document.getElementById('deleteSpiel').addEventListener('click', async () => {
+    const id = document.getElementById('SpieleSelect').value;
+    if (!id) return;
+
+    await fetch(`/api/spiele/${id}`, { method: 'DELETE' });
+    ladespiele();
+});
+
+
+
 // Zeit löschen
 document.getElementById('deleteBtn').addEventListener('click', async () => {
     const id = document.getElementById('zeitenSelect').value;
@@ -226,7 +301,13 @@ document.getElementById('deleteVerein').addEventListener('click', async () => {
       
 });
 
+function convertToPostgresTimestamp(text) {
+  // "16.12.2025, 11:11:00"
+  const [datum, zeit] = text.split(', ');
+  const [tag, monat, jahr] = datum.split('.');
 
+  return `${jahr}-${monat}-${tag} ${zeit}`;
+}
 
 
 

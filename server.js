@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const pg = require('pg');
 const path = require('path');
+const { log } = require('console');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -30,6 +31,18 @@ pool.connect((err, client, done) => {
     }
     client.release();
     console.log('PostgreSQL-Datenbank verbunden!');
+});
+
+// DELETE ein Spiel
+app.delete('/api/spiele/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query('DELETE FROM spiele WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // DELETE einen Verein
@@ -68,8 +81,6 @@ app.get('/api/vereine', async (req, res) => {
   }
 });
 
-
-
 // GET alle Zeiten
 app.get('/api/zeiten', async (req, res) => {
   try {
@@ -81,6 +92,21 @@ app.get('/api/zeiten', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// GET alle Spiele
+app.get('/api/spiele', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT id, anstoss, heimverein, gastverein, heimtore, gasttore, statuswort FROM spiele ORDER BY anstoss'
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 
 // Neuen Verein  anlegen i.A
 app.post("/api/vereine", async (req, res) => {
@@ -98,7 +124,21 @@ app.post("/api/vereine", async (req, res) => {
     }
 });
 
-
+// Neues Spiel anlegen i.A
+app.post("/api/spiele", async (req, res) => {
+    const { anstoss, heimverein, gastverein, heimtore, gasttore, statuswort } = req.body; 
+    log(`Server: Neues Spiel anlegen: ${anstoss}, ${heimverein}, ${gastverein}, ${statuswort}`);
+    try {
+        const result = await pool.query(
+            "INSERT INTO spiele (anstoss, heimverein, gastverein, heimtore, gasttore, statuswort) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+            [anstoss, heimverein, gastverein, heimtore, gasttore, statuswort]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Fehler beim Anlegen des Spiels" });
+    }
+});
 
 // --- API Endpunkt: Einen einzelnen Zeitpunkt speichern ---
 app.post('/api/zeiten', async (req, res) => {
